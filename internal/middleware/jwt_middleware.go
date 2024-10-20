@@ -1,14 +1,15 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/golang-jwt/jwt/v4" 
-	"github.com/gin-gonic/gin"
 	"github.com/c-kiplimo/Smart-Wallet/internal/dto"
 	s "github.com/c-kiplimo/Smart-Wallet/internal/service"
 	"github.com/c-kiplimo/Smart-Wallet/pkg/utils"
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 func AuthMiddleware(jwtService s.JWTService, userService s.UserService) gin.HandlerFunc {
@@ -23,6 +24,8 @@ func AuthMiddleware(jwtService s.JWTService, userService s.UserService) gin.Hand
 
 		arrayToken := strings.Split(authHeader, " ")
 		if len(arrayToken) != 2 {
+			fmt.Println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+			fmt.Println(len(arrayToken))
 			response := utils.ErrorResponse("Unauthorized", http.StatusUnauthorized, "unrecognized token")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 			return
@@ -38,6 +41,11 @@ func AuthMiddleware(jwtService s.JWTService, userService s.UserService) gin.Hand
 
 		payload, ok := token.Claims.(jwt.MapClaims)
 		if !ok || !token.Valid {
+			if payload != nil {
+				fmt.Println("Claims are present but invalid:", payload.Valid().Error())
+			} else {
+				fmt.Println("Payload is nil.")
+			}
 			response := utils.ErrorResponse("Unauthorized", http.StatusUnauthorized, "not a valid bearer token")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 			return

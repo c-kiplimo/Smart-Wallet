@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	// "os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/c-kiplimo/Smart-Wallet/config"
@@ -39,8 +39,8 @@ func main() {
 
 	router := gin.Default()
 
-	version := os.Getenv("API_VERSION")
-	api := router.Group(fmt.Sprintf("/api/%s", version))
+	// version := os.Getenv("API_VERSION")
+	api := router.Group(fmt.Sprintf("/api/v1"))
 
 	routes.Auth(api, h)
 	routes.User(api, h)

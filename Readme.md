@@ -18,7 +18,7 @@ git clone git@github.com:c-kiplimo/Smart-Wallet.git
 Step 2: Set Up Environment Variables
 Create a .env file in the project root directory and add the following environment variables:
 ```
-POSTGRES_USER=saadbinnoman
+POSTGRES_USER=collins
 POSTGRES_PASSWORD=yourpassword
 POSTGRES_DB=yourdatabase
 ```
@@ -28,7 +28,7 @@ Navigate to the project directory and run Docker Compose to set up the PostgreSQ
 Step 4: Create a New User:
 
 Exec into the PostgreSQL container and create a new user:
-```docker exec -it your-project-db-container psql -U saadbinnoman -d postgres```
+```docker exec -it your-project-db-container psql -U collins -d postgres```
 Once inside the PostgreSQL shell, run:
 ```
 CREATE USER newusername WITH PASSWORD 'newpassword';
@@ -38,13 +38,13 @@ Step 5: Perform SQL Data Dump
 To load your initial data and create the necessary tables and foreign keys, you need to perform an SQL data dump. Assuming your SQL dump file is named database_dump.sql and located in the root of your project directory, run:
 ```
 docker cp database_dump.sql your-project-db-container:/database_dump.sql
-docker exec -it your-project-db-container psql -U saadbinnoman -d postgres -f /database_dump.sql
+docker exec -it your-project-db-container psql -U collins -d postgres -f /database_dump.sql
 ```
 Usage
 Checking the Source of Funds Table
 To check if the source_of_funds table exists and view its contents:
 ```
-docker exec -it your-project-db-container psql -U saadbinnoman -d postgres
+docker exec -it your-project-db-container psql -U collins -d postgres
 
 # Inside the PostgreSQL shell
 \dt public.source_of_funds
